@@ -220,15 +220,15 @@ class UnixSocketExporter(interfaces.ExporterInterface):
 						data = json.loads(data)
 					except Exception as e:
 						log.error("Failed to load json data '%s': %s" % (data, e))
-						self._send_data(conn, self._create_error_responce(-32700, "Parse error", str(e)))
+						self._send_data(conn, self._create_error_responce(-32700, "Parse error", data=str(e)))
 						continue
 					if type(data) not in (tuple, list, dict):
 						log.error("Wrong format of call")
-						self._send_data(conn, self._create_error_responce(-32700, "Parse error", str(e)))
+						self._send_data(conn, self._create_error_responce(-32700, "Parse error", data="Wrong format of call"))
 						continue
 					if type(data) in (tuple, list):
 						if len(data) == 0:
-							self._send_data(conn, self._create_error_responce(-32600, "Invalid Request", str(e)))
+							self._send_data(conn, self._create_error_responce(-32600, "Invalid Request", data="Empty batch"))
 							continue
 						res = []
 						for req in data:

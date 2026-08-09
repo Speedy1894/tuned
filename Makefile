@@ -58,6 +58,7 @@ TUNED_USER_PROFILES_DIR = $(TUNED_CFG_DIR)/profiles
 TUNED_RECOMMEND_DIR = $(TUNED_SYSTEM_DIR)/recommend.d
 TUNED_USER_RECOMMEND_DIR = $(TUNED_CFG_DIR)/recommend.d
 BASH_COMPLETIONS = $(DATADIR)/bash-completion/completions
+ZSH_COMPLETIONS = $(DATADIR)/zsh/site-functions
 PPD_BUS_NAMES = org.freedesktop.UPower.PowerProfiles net.hadess.PowerProfiles
 
 copy_executable = install -Dm 0755 $(1) $(2)
@@ -207,6 +208,9 @@ install: install-dirs
 
 	# bash completion
 	install -Dpm 0644 tuned-adm.bash $(DESTDIR)$(BASH_COMPLETIONS)/tuned-adm
+
+	# zsh completion
+	install -Dpm 0644 tuned.zsh $(DESTDIR)$(ZSH_COMPLETIONS)/_tuned
 
 	# runtime directory
 	install -Dpm 0644 tuned.tmpfiles $(DESTDIR)$(TMPFILESDIR)/tuned.conf

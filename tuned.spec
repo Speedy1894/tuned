@@ -465,6 +465,7 @@ fi
 %exclude %{docdir}/README.NFV
 %doc %{docdir}
 %{_datadir}/bash-completion/completions/tuned-adm
+%{_datadir}/zsh/site-functions/_tuned
 %if %{with python3}
 %exclude %{python3_sitelib}/tuned/gtk
 %{python3_sitelib}/tuned

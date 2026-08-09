@@ -58,6 +58,7 @@ TUNED_USER_PROFILES_DIR = $(TUNED_CFG_DIR)/profiles
 TUNED_RECOMMEND_DIR = $(TUNED_SYSTEM_DIR)/recommend.d
 TUNED_USER_RECOMMEND_DIR = $(TUNED_CFG_DIR)/recommend.d
 BASH_COMPLETIONS = $(DATADIR)/bash-completion/completions
+ZSH_COMPLETIONS = $(DATADIR)/zsh/site-functions
 PPD_BUS_NAMES = org.freedesktop.UPower.PowerProfiles net.hadess.PowerProfiles
 
 copy_executable = install -Dm 0755 $(1) $(2)
@@ -73,10 +74,10 @@ release-cp: release-dir
 	cp -a AUTHORS COPYING INSTALL README.md $(VERSIONED_NAME)
 
 	cp -a tuned.py tuned.spec tuned.service tuned.tmpfiles Makefile tuned-adm.py \
-		tuned-adm.bash dbus.conf recommend.conf tuned-main.conf 00_tuned.grub \
-		00-tuned.conf.systemd 92-tuned.install bootcmdline modules.conf \
-		com.redhat.tuned.policy tuned-gui.py tuned-gui.glade tuned-ppd.py \
-		tuned-gui.desktop functions $(VERSIONED_NAME)
+		tuned-adm.bash tuned.zsh tuned-adm.zsh dbus.conf recommend.conf \
+		tuned-main.conf 00_tuned.grub 00-tuned.conf.systemd 92-tuned.install \
+		bootcmdline modules.conf com.redhat.tuned.policy tuned-gui.py \
+		tuned-gui.glade tuned-ppd.py tuned-gui.desktop functions $(VERSIONED_NAME)
 	cp -a doc experiments libexec man profiles systemtap tuned contrib icons \
 		tests $(VERSIONED_NAME)
 
@@ -207,6 +208,10 @@ install: install-dirs
 
 	# bash completion
 	install -Dpm 0644 tuned-adm.bash $(DESTDIR)$(BASH_COMPLETIONS)/tuned-adm
+
+	# zsh completion
+	install -Dpm 0644 tuned.zsh $(DESTDIR)$(ZSH_COMPLETIONS)/_tuned
+	install -Dpm 0644 tuned-adm.zsh $(DESTDIR)$(ZSH_COMPLETIONS)/_tuned-adm
 
 	# runtime directory
 	install -Dpm 0644 tuned.tmpfiles $(DESTDIR)$(TMPFILESDIR)/tuned.conf

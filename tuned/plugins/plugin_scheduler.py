@@ -1088,7 +1088,7 @@ class SchedulerPlugin(base.Plugin):
 			return False
 
 	def _cgroup_verify_affinity(self):
-		log.debug("Veryfying cgroups affinities")
+		log.debug("Verifying cgroups affinities")
 		ret = True
 		if self._affinity is not None and self._cgroup is not None and not self._cgroup in self._cgroups:
 			ret = ret and self._cgroup_verify_affinity_one(self._cgroup, self._affinity)

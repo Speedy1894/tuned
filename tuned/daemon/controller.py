@@ -67,7 +67,7 @@ class Controller(tuned.exports.interfaces.ExportableInterface):
 				monitor.set_receive_buffer_size(udev_buffer_size)
 			except EnvironmentError:
 				log.warning("cannot set udev monitor receive buffer size, we are probably running inside " +
-					 "container or with limited capabilites, TuneD functionality may be limited")
+					 "container or with limited capabilities, TuneD functionality may be limited")
 			p = True
 			t = time.time()
 			try:

@@ -331,7 +331,7 @@ class CPULatencyPlugin(hotplug.Plugin):
 			log.debug("'%s' is not online, skipping" % device)
 			return False
 		if not self._cpu_has_scaling_governor(device):
-			log.debug("there is no scaling governor fo '%s', skipping" % device)
+			log.debug("there is no scaling governor for '%s', skipping" % device)
 			return False
 		return True
 

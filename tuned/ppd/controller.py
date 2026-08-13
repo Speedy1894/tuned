@@ -25,6 +25,7 @@ UPOWER_DBUS_INTERFACE = "org.freedesktop.UPower"
 PLATFORM_PROFILE_PATH = "/sys/firmware/acpi/platform_profile"
 PLATFORM_PROFILE_MAPPING = {
     "low-power": PPD_POWER_SAVER,
+    "quiet": PPD_POWER_SAVER,
     "balanced": PPD_BALANCED,
     "performance": PPD_PERFORMANCE
 }

@@ -36,6 +36,7 @@ class Plugin(object):
 		self._variables = variables
 		self._has_dynamic_options = False
 		self._devices_inited = False
+		self._devices_supported = False
 
 		self._options_used_by_dynamic = self._get_config_options_used_by_dynamic()
 

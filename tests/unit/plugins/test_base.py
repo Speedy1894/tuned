@@ -63,6 +63,39 @@ class PluginBaseTestCase(unittest.TestCase):
 		self._plugin.destroy_instance(instance)
 		self.assertIn(instance,self._plugin.cleaned_instances)
 
+	def test_destroy_instance_without_init_devices(self):
+		"""Destroying an instance must not require init_devices() first.
+
+		Regression guard for behaviour that has since been fixed. Before
+		_devices_supported was initialised in Plugin.__init__, it was created
+		only by _init_devices(), which runs only via init_devices(), while
+		release_devices() read it unconditionally -- so an instance destroyed
+		before init_devices() had run raised AttributeError. That happened in
+		practice when create() failed part way through: the instances already
+		made were torn down by plugins whose init_devices() had never been
+		reached, and every one of them raised again in cleanup.
+		"""
+		instance = self._plugin.create_instance(\
+			'first_instance',0,'test','test','test','test',\
+			{'default_option1':'default_value2'})
+
+		# deliberately no instance.plugin.init_devices() here
+		self._plugin.destroy_instance(instance)
+		self.assertIn(instance,self._plugin.cleaned_instances)
+
+	def test_assign_free_devices_without_init_devices(self):
+		"""Assigning devices must not require init_devices() first.
+
+		Regression guard for the same fixed behaviour: assign_free_devices()
+		read _devices_supported unguarded, exactly as release_devices() did.
+		"""
+		instance = self._plugin.create_instance(\
+			'first_instance',0,'test','test','test','test',\
+			{'default_option1':'default_value2'})
+
+		# deliberately no instance.plugin.init_devices() here
+		self._plugin.assign_free_devices(instance)
+
 	def test_get_matching_devices(self):
 		""" without udev regex """
 		instance = self._plugin.create_instance(\

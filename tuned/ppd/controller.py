@@ -459,7 +459,7 @@ class Controller(exports.interfaces.ExportableInterface):
         if not self._profile_holds.has(cookie):
             raise dbus.exceptions.DBusException("No active hold for cookie '%s'" % cookie)
         if not self._profile_holds.check_caller(cookie, caller):
-            raise dbus.exceptions.DBusException("Cannot release a profile hold inititated by another process.")
+            raise dbus.exceptions.DBusException("Cannot release a profile hold initiated by another process.")
         self._profile_holds.remove(cookie)
 
     @exports.signal("u")

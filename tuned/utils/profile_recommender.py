@@ -123,7 +123,7 @@ class ProfileRecommender:
 					r = re.compile(r",[^,]*$")
 					matching_profile = r.sub("", section)
 					break
-		except (IOError, OSError, Error) as e:
+		except (IOError, OSError, Error, re.error) as e:
 			log.error("error processing '%s', %s" % (fname, e))
 		return matching_profile
 

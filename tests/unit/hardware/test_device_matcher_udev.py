@@ -34,3 +34,19 @@ class DeviceMatcherUdevTestCase(unittest.TestCase):
 				"/sys/devices/virtual/tty/tty0")
 		self.assertTrue(self.matcher.match("tty.", device))
 		self.assertFalse(self.matcher.match("tty[1-9]", device))
+
+	def test_invalid_regex_does_not_traceback(self):
+		# An invalid devices_udev_regex must not raise re.error and break
+		# profile application; it should be reported and treated as no match.
+		class FakeProperties(dict):
+			pass
+		class FakeDevice:
+			def __init__(self):
+				self.sys_name = "fakedev"
+				self.properties = FakeProperties({"ID_MODEL": "foo"})
+			def items(self):
+				return self.properties.items()
+		device = FakeDevice()
+		self.assertFalse(self.matcher.match("[", device))
+		self.assertFalse(self.matcher.match("(a", device))
+		self.assertFalse(self.matcher.match("*", device))
